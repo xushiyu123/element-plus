@@ -219,4 +219,8 @@ export const SelectProps = buildProps({
     type: String,
     default: undefined,
   },
+  shiftSelect: {
+    type: Boolean,
+    default: false,
+  },
 })
