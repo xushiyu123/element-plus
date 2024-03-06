@@ -72,6 +72,7 @@ export const useSelect = (props: ISelectProps, emit) => {
     inputHovering: false,
     menuVisibleOnFocus: false,
     isBeforeHide: false,
+    isShiftKeyDown: false,
   })
 
   // template refs
@@ -537,6 +538,9 @@ export const useSelect = (props: ISelectProps, emit) => {
     focus()
   }
 
+  let startIndex = -1
+  let originalValue
+
   const handleOptionSelect = (option) => {
     if (props.multiple) {
       const value = (props.modelValue || []).slice()
@@ -548,6 +552,50 @@ export const useSelect = (props: ISelectProps, emit) => {
         value.length < props.multipleLimit
       ) {
         value.push(option.value)
+      }
+      if (props.shiftSelect) {
+        if (!originalValue) {
+          originalValue = (props.modelValue || []).slice()
+        }
+        if (!states.isShiftKeyDown) {
+          startIndex = optionsArray.value.findIndex(
+            (v) => v.value === option.value
+          )
+        } else {
+          const endIndex = optionsArray.value.findIndex(
+            (v) => v.value === option.value
+          )
+          const start = Math.min(startIndex, endIndex)
+          const end = Math.max(startIndex, endIndex)
+          const valuesToAdd = optionsArray.value
+            .slice(start, end + 1)
+            .map((v) => v.value)
+          if (startIndex > -1) {
+            // 删除开始结束选中的数据
+            const startValue = optionsArray.value[startIndex].value
+            const endValue = optionsArray.value[endIndex].value
+            const si = value.indexOf(startValue)
+            si > -1 && value.splice(si, 1)
+            const ei = value.indexOf(endValue)
+            ei > -1 && value.splice(ei, 1)
+            valuesToAdd.forEach((v) => {
+              const index = originalValue.indexOf(v)
+              if (index > -1) {
+                const valueIndex = value.indexOf(v)
+                if (valueIndex > -1) {
+                  value.splice(valueIndex, 1)
+                }
+              } else if (
+                props.multipleLimit <= 0 ||
+                value.length < props.multipleLimit
+              ) {
+                value.push(v)
+              }
+            })
+            originalValue = null
+            startIndex = -1
+          }
+        }
       }
       emit(UPDATE_MODEL_EVENT, value)
       emitChange(value)
@@ -786,6 +834,22 @@ export const useSelect = (props: ISelectProps, emit) => {
     setSelected()
   })
 
+  const handleKeydownShift = (e: KeyboardEvent) => {
+    if (props.shiftSelect) {
+      if (e.key === 'Shift' && e.shiftKey) {
+        states.isShiftKeyDown = true
+      }
+    }
+  }
+
+  const handleKeyupShift = (e: KeyboardEvent) => {
+    if (props.shiftSelect) {
+      if (e.key === 'Shift') {
+        states.isShiftKeyDown = false
+      }
+    }
+  }
+
   return {
     inputId,
     contentId,
@@ -863,5 +927,7 @@ export const useSelect = (props: ISelectProps, emit) => {
     menuRef,
     tagMenuRef,
     collapseItemRef,
+    handleKeydownShift,
+    handleKeyupShift,
   }
 }

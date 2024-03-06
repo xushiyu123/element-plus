@@ -218,4 +218,8 @@ export const SelectProps = buildProps({
   },
   ...useEmptyValuesProps,
   ...useAriaProps(['ariaLabel']),
+  shiftSelect: {
+    type: Boolean,
+    default: false,
+  },
 })
