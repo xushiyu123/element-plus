@@ -11,7 +11,6 @@ export declare type IDatePickerType =
   | 'datetimerange'
   | 'daterange'
   | 'monthrange'
-  | 'yeardate'
   | 'monthdate'
 
 type DateCellType = 'normal' | 'today' | 'week' | 'next-month' | 'prev-month'

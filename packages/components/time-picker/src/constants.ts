@@ -13,7 +13,6 @@ export const DEFAULT_FORMATS_DATEPICKER = {
   monthrange: 'YYYY-MM',
   daterange: DEFAULT_FORMATS_DATE,
   datetimerange: `${DEFAULT_FORMATS_DATE} ${DEFAULT_FORMATS_TIME}`,
-  yeardate: DEFAULT_FORMATS_DATE,
   monthdate: 'MM-DD',
 }
 
