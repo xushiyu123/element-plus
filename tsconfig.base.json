@@ -17,6 +17,6 @@
     "types": [],
     "paths": {
       "@element-plus/*": ["packages/*"]
-    }
+    },
   }
 }
