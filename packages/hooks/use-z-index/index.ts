@@ -16,9 +16,9 @@ const zIndex = ref(0)
 export const defaultInitialZIndex = 2000
 
 // For SSR
-export const ZINDEX_INJECTION_KEY: any = 'elZIndexContextKey'
+export const ZINDEX_INJECTION_KEY = 'elZIndexContextKey'
 
-export const zIndexContextKey: any = 'zIndexContextKey'
+export const zIndexContextKey = 'zIndexContextKey'
 
 export const useZIndex = (zIndexOverrides?: Ref<number>) => {
   const increasingInjection = getCurrentInstance()
