@@ -7,11 +7,22 @@ export interface ElZIndexInjectionContext {
   current: number
 }
 
-const initial: ElZIndexInjectionContext = {
-  current: 0,
+// @ts-ignore
+if (!window.$$InitialZindex) {
+  // @ts-ignore
+  window.$$InitialZindex = {
+    current: 0,
+  }
 }
 
-const zIndex = ref(0)
+// @ts-ignore
+const initial: ElZIndexInjectionContext = window.$$InitialZindex
+
+// @ts-ignore
+if (!window.$$Zindex) {
+  // @ts-ignore
+  window.$$Zindex = ref(0)
+}
 
 export const defaultInitialZIndex = 2000
 
@@ -21,6 +32,8 @@ export const ZINDEX_INJECTION_KEY = 'elZIndexContextKey'
 export const zIndexContextKey = 'zIndexContextKey'
 
 export const useZIndex = (zIndexOverrides?: Ref<number>) => {
+  // @ts-ignore
+  const zIndex = window.$$Zindex
   const increasingInjection = getCurrentInstance()
     ? inject(ZINDEX_INJECTION_KEY, initial)
     : initial
