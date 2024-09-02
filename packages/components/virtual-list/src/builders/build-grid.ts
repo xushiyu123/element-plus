@@ -186,7 +186,7 @@ const createGrid = ({
       const windowStyle = computed<StyleValue>(() => [
         {
           position: 'relative',
-          overflow: 'hidden',
+          overflow: 'auto',
           WebkitOverflowScrolling: 'touch',
           willChange: 'transform',
         },
