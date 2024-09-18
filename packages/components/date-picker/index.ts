@@ -1,10 +1,9 @@
 import DatePicker from './src/date-picker'
-
+import type { App } from 'vue'
+import type { SFCWithInstall } from '@element-plus/utils'
 import BasicDateTable from './src/date-picker-com/basic-date-table.vue'
 import BasicMonthTable from './src/date-picker-com/basic-month-table.vue'
 import BasicYearTable from './src/date-picker-com/basic-year-table.vue'
-import type { SFCWithInstall } from '@element-plus/utils'
-import type { App } from 'vue'
 
 const _DatePicker = DatePicker as SFCWithInstall<typeof DatePicker>
 
